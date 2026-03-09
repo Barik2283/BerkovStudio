@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BerkovStudio - Разработка игр и сайтов</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1 class="logo-text">Berkov<span class="gradient-text">Studio</span></h1>
+                <div class="header-info">
+                    <span class="header-info-item">📁 HTML</span>
+                    <span class="header-info-item">📅 Выходные</span>
+                    <span class="header-info-item">💳 Все валюты</span>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="#about" class="nav-link">О нас</a>
+                <a href="#services" class="nav-link">Услуги</a>
+                <a href="#pricing" class="nav-link">Тарифы</a>
+                <a href="#minigames" class="nav-link">Мини-игры</a>
+                <a href="#contact" class="nav-link">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">
+                    <span class="gradient-text">BerkovStudio</span>
+                </h1>
+                <p class="hero-subtitle">Разработка игр и сайтов любой сложности</p>
+                <a href="#order" class="btn btn-primary">Заказать</a>
+            </div>
+        </section>
+
+        <section class="features" id="about">
+            <div class="container">
+                <h2 class="section-title">Почему я?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Профессионал</h3>
+                        <p>Опытный разработчик с многолетним стажем</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Надёжность</h3>
+                        <p>Гарантирую качество и безопасность</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💎</div>
+                        <h3>Премиум качество</h3>
+                        <p>Использую только современные и оптимизированные решения</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services" id="services">
+            <div class="container">
+                <h2 class="section-title">Что я создаю</h2>
+                <p class="services-note">🎮 Основные направления</p>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🎮</div>
+                        <h3>Игры</h3>
+                        <p>Разработка игр под ключ: от идеи до релиза</p>
+                        <p class="service-pro">✅ Создаётся профессионалом</p>
+                        <span class="service-tag">GameDev</span>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🌐</div>
+                        <h3>Сайты</h3>
+                        <p>Современные веб-сайты: лендинги, визитки, магазины</p>
+                        <p class="service-pro">✅ Создаётся профессионалом</p>
+                        <span class="service-tag">Web</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="minigames" id="minigames">
+            <div class="container">
+                <h2 class="section-title">Мини-игры</h2>
+                <p class="minigames-note">🎮 Бесплатные игры прямо на сайте</p>
+                <div class="minigames-grid">
+                    <div class="minigame-card featured-game">
+                        <div class="game-badge">🔥 Популярное</div>
+                        <div class="ml-stroy-badge">✅ MelloDay рекомендует</div>
+                        <div class="minigame-icon">🎡</div>
+                        <h3>Колесо Фортуны</h3>
+                        <p>Крути колесо и выигрывай призы! До 1000$ за один спин!</p>
+                        <span class="minigame-tag">HTML Game</span>
+                        <button class="btn btn-primary play-btn" data-game="wheel">Играть</button>
+                    </div>
+                    <div class="minigame-card">
+                        <div class="minigame-icon">🎰</div>
+                        <h3>Слоты</h3>
+                        <p>Азартные игровые автоматы с джекпотом! Испытай удачу!</p>
+                        <span class="minigame-tag">HTML Game</span>
+                        <button class="btn btn-primary play-btn" data-game="slots">Играть</button>
+                    </div>
+                    <div class="minigame-card">
+                        <div class="minigame-icon">🐍</div>
+                        <h3>Змейка</h3>
+                        <p>Классическая змейка — собирай еду, расти и не врезайся в стены</p>
+                        <span class="minigame-tag">HTML Game</span>
+                        <button class="btn btn-primary play-btn" data-game="snake">Играть</button>
+                    </div>
+                    <div class="minigame-card">
+                        <div class="minigame-icon">💣</div>
+                        <h3>Сапёр</h3>
+                        <p>Классический сапёр — ищи мины, используй флажки и очищай поле</p>
+                        <span class="minigame-tag">HTML Game</span>
+                        <button class="btn btn-primary play-btn" data-game="minesweeper">Играть</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing" id="pricing">
+            <div class="container">
+                <h2 class="section-title">Тарифы</h2>
+                <p class="pricing-note">💰 Принимаю все валюты • Цены от $1 до $20</p>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-tier">Базовый</div>
+                        <div class="pricing-price">$1 - $5</div>
+                        <ul class="pricing-features">
+                            <li>✓ Простой проект</li>
+                            <li>✓ Базовый функционал</li>
+                            <li>✓ Срок: 3-5 дней</li>
+                            <li>✓ Поддержка 7 дней</li>
+                        </ul>
+                        <button type="button" class="btn btn-outline select-tariff" data-tariff="Базовый ($1-$5)">Выбрать</button>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="badge">Популярный</div>
+                        <div class="pricing-tier">Стандарт</div>
+                        <div class="pricing-price">$6 - $12</div>
+                        <ul class="pricing-features">
+                            <li>✓ Проект средней сложности</li>
+                            <li>✓ Расширенный функционал</li>
+                            <li>✓ Срок: 7-14 дней</li>
+                            <li>✓ Поддержка 30 дней</li>
+                        </ul>
+                        <button type="button" class="btn btn-primary select-tariff" data-tariff="Стандарт ($6-$12)">Выбрать</button>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-tier">Премиум</div>
+                        <div class="pricing-price">$13 - $20</div>
+                        <ul class="pricing-features">
+                            <li>✓ Сложный проект</li>
+                            <li>✓ Полный функционал</li>
+                            <li>✓ Срок: 14-30 дней</li>
+                            <li>✓ Поддержка 90 дней</li>
+                        </ul>
+                        <button type="button" class="btn btn-outline select-tariff" data-tariff="Премиум ($13-$20)">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="important">
+            <div class="container">
+                <h2 class="section-title">Важная информация</h2>
+                <div class="important-grid">
+                    <div class="important-item">
+                        <div class="important-icon">📁</div>
+                        <h3>Формат работы</h3>
+                        <p>Создаю игры и сайты в формате HTML</p>
+                    </div>
+                    <div class="important-item">
+                        <div class="important-icon">📅</div>
+                        <h3>График работы</h3>
+                        <p>Работаю по выходным дням</p>
+                    </div>
+                    <div class="important-item">
+                        <div class="important-icon">💳</div>
+                        <h3>Оплата</h3>
+                        <p>Принимаю все валюты</p>
+                    </div>
+                    <div class="important-item">
+                        <div class="important-icon">🎮</div>
+                        <h3>Разработка игр</h3>
+                        <p>Создаю браузерные игры любой сложности</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="process">
+            <div class="container">
+                <h2 class="section-title">Как я работаю</h2>
+                <div class="process-grid">
+                    <div class="process-item">
+                        <div class="process-step">01</div>
+                        <h3>Оставляете заявку</h3>
+                        <p>Заполняете форму с описанием проекта и контактами</p>
+                    </div>
+                    <div class="process-item">
+                        <div class="process-step">02</div>
+                        <h3>Разрабатываю проект</h3>
+                        <p>Создаю ваш проект согласно ТЗ в формате HTML</p>
+                    </div>
+                    <div class="process-item">
+                        <div class="process-step">03</div>
+                        <h3>Передаю готовый проект</h3>
+                        <p>Пишу вам в личку (Telegram/Discord) из заявки и передаю готовую работу</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits">
+            <div class="container">
+                <h2 class="section-title">Наши преимущества</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-number">01</div>
+                        <h3>Индивидуальный подход</h3>
+                        <p>Каждый проект уникален и требует особого внимания к деталям</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-number">02</div>
+                        <h3>Соблюдение сроков</h3>
+                        <p>Всегда сдаём проекты вовремя без задержек</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-number">03</div>
+                        <h3>Техническая поддержка</h3>
+                        <p>Бесплатная поддержка после запуска проекта</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-number">04</div>
+                        <h3>Прозрачные цены</h3>
+                        <p>Никаких скрытых платежей, всё честно и открыто</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="portfolio">
+            <div class="container">
+                <h2 class="section-title">Почему выбирают нас</h2>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-icon">🚀</div>
+                        <h3>Быстрая разработка</h3>
+                        <p>Оперативно приступаем к работе и быстро выполняем заказы</p>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-icon">💼</div>
+                        <h3>Опыт работы</h3>
+                        <p>Многолетний опыт в разработке игр и веб-сайтов</p>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-icon">🎯</div>
+                        <h3>Точное ТЗ</h3>
+                        <p>Внимательно изучаем требования и реализуем всё точно в срок</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="order" id="order">
+            <div class="container">
+                <h2 class="section-title">Заказать проект</h2>
+                <form class="order-form" id="orderForm">
+                    <div class="form-group">
+                        <input type="text" id="contact" required placeholder=" ">
+                        <label for="contact">Ваш Telegram или Discord</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="tariff" placeholder=" " readonly>
+                        <label for="tariff">Тариф (выберите выше)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" id="deadline" required>
+                        <label for="deadline">Желаемая дата готовности</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="service" required placeholder=" ">
+                        <label for="service">Что нужно? (Игра/Сайт)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="script" required placeholder=" ">
+                        <label for="script">Описание проекта</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large">Отправить заявку</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="container">
+                <h2 class="section-title">Контакты</h2>
+                <div class="contact-content">
+                    <p class="contact-text">Техническая поддержка:</p>
+                    <a href="https://t.me/AntonCguryg" target="_blank" class="contact-link">@AntonCguryg</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Game Modals -->
+    <div class="game-modal" id="gameModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h2 id="gameTitle">Игра</h2>
+            <div id="gameContainer"></div>
+            <div id="gameControls"></div>
+            <div class="game-balance-info">
+                <div class="balance-item">
+                    <span class="balance-label">💰 Баланс слотов:</span>
+                    <span class="balance-value" id="gameBalanceDisplay">0$</span>
+                </div>
+                <div class="balance-item">
+                    <span class="balance-label">🎡 Баланс колеса:</span>
+                    <span class="balance-value" id="wheelBalanceDisplay">0$</span>
+                </div>
+                <div class="balance-item">
+                    <span class="balance-label">🎫 Тарифы:</span>
+                    <span class="balance-value" id="gameTariffsDisplay">0</span>
+                </div>
+            </div>
+            <div class="game-balance-actions">
+                <button class="btn btn-outline" id="viewInventoryBtn">🎒 Инвентарь</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory Modal -->
+    <div class="game-modal" id="inventoryModal">
+        <div class="modal-content inventory-content">
+            <button class="modal-close" id="inventoryClose">&times;</button>
+            <h2>🎒 Инвентарь</h2>
+            <div class="inventory-grid" id="inventoryGrid"></div>
+            <div class="inventory-stats">
+                <div class="inventory-stat">
+                    <span class="stat-icon">💰</span>
+                    <span class="stat-label">Баланс слотов:</span>
+                    <span class="stat-value" id="inventoryBalance">0$</span>
+                </div>
+                <div class="inventory-stat">
+                    <span class="stat-icon">🎡</span>
+                    <span class="stat-label">Баланс колеса:</span>
+                    <span class="stat-value" id="inventoryWheelBalance">0$</span>
+                </div>
+                <div class="inventory-stat">
+                    <span class="stat-icon">🎫</span>
+                    <span class="stat-label">Тарифы:</span>
+                    <span class="stat-value" id="inventoryTariffs">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2 class="footer-logo-text">Berkov<span class="gradient-text">Studio</span></h2>
+                </div>
+                <div class="footer-credits">
+                    <p>Создал <span class="creator-name">Антон Чигур</span></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 BerkovStudio. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

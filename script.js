@@ -259,15 +259,22 @@ function openGame(game) {
 }
 
 function closeGame() {
+    if (!gameModal) return;
     gameModal.classList.remove('active');
-    gameContainer.innerHTML = '';
-    gameControls.innerHTML = '';
-    currentGame = null;
     
+    // Полная очистка
+    if (gameContainer) gameContainer.innerHTML = '';
+    if (gameControls) gameControls.innerHTML = '';
+    
+    currentGame = null;
+
     if (snakeInterval) {
         clearInterval(snakeInterval);
         snakeInterval = null;
     }
+    
+    // Удаляем обработчик клавиатуры
+    document.removeEventListener('keydown', handleKeyPress);
 }
 
 function openInventory() {
@@ -359,138 +366,298 @@ function addToInventory(icon, name, count = 1) {
 
 // ========== SNAKE GAME ==========
 function startSnakeGame() {
-    gameTitle.textContent = '🐍 Змейка';
+    if (!gameTitle || !gameContainer || !gameControls) {
+        console.error('Game elements not found!');
+        return;
+    }
     
+    gameTitle.textContent = '🐍 Змейка';
+
     const canvas = document.createElement('canvas');
     canvas.id = 'snakeCanvas';
     canvas.width = 400;
     canvas.height = 400;
+    canvas.style.cssText = 'border: 2px solid var(--primary); border-radius: 10px; background: #0a0a0f; box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);';
     gameContainer.appendChild(canvas);
-    
+
     const ctx = canvas.getContext('2d');
     const gridSize = 20;
-    
+
     snake = [{x: 10, y: 10}];
     snakeDirection = 'right';
     snakeScore = 0;
+    let gameSpeed = 150;
     placeFood(gridSize);
-    
-    // Кнопки управления
-    const controls = document.createElement('div');
-    controls.style.cssText = 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-width: 150px; margin: 10px auto;';
-    controls.innerHTML = `
-        <div></div>
-        <button class="btn btn-outline" id="upBtn" style="padding: 10px;">↑</button>
-        <div></div>
-        <button class="btn btn-outline" id="leftBtn" style="padding: 10px;">←</button>
-        <button class="btn btn-outline" id="downBtn" style="padding: 10px;">↓</button>
-        <button class="btn btn-outline" id="rightBtn" style="padding: 10px;">→</button>
-    `;
-    gameControls.appendChild(controls);
-    
+
+    // Счёт
     const scoreDisplay = document.createElement('div');
     scoreDisplay.id = 'snakeScore';
-    scoreDisplay.style.cssText = 'font-size: 20px; color: var(--primary); margin: 10px 0;';
-    scoreDisplay.textContent = 'Счёт: 0';
-    gameControls.insertBefore(scoreDisplay, gameControls.firstChild);
+    scoreDisplay.style.cssText = 'font-size: 24px; color: var(--primary); margin: 10px 0; font-weight: bold; text-shadow: 0 0 10px var(--primary);';
+    scoreDisplay.textContent = '🍎 Счёт: 0';
+    gameControls.appendChild(scoreDisplay);
+
+    // Рекорд
+    const highScore = localStorage.getItem('snakeHighScore') || 0;
+    const highScoreDisplay = document.createElement('div');
+    highScoreDisplay.style.cssText = 'font-size: 18px; color: var(--secondary); margin: 5px 0;';
+    highScoreDisplay.textContent = '🏆 Рекорд: ' + highScore;
+    gameControls.appendChild(highScoreDisplay);
+
+    // Кнопки управления - улучшенная раскладка
+    const controls = document.createElement('div');
+    controls.style.cssText = 'display: grid; grid-template-columns: repeat(3, 60px); grid-template-rows: repeat(2, 50px); gap: 8px; margin: 20px auto; justify-content: center;';
+    controls.innerHTML = `
+        <div style="grid-column: 2; grid-row: 1;">
+            <button class="btn btn-outline" id="upBtn" style="width: 100%; height: 100%; font-size: 24px; padding: 0;">▲</button>
+        </div>
+        <div style="grid-column: 1; grid-row: 2;">
+            <button class="btn btn-outline" id="leftBtn" style="width: 100%; height: 100%; font-size: 24px; padding: 0;">◀</button>
+        </div>
+        <div style="grid-column: 2; grid-row: 2;">
+            <button class="btn btn-outline" id="downBtn" style="width: 100%; height: 100%; font-size: 24px; padding: 0;">▼</button>
+        </div>
+        <div style="grid-column: 3; grid-row: 2;">
+            <button class="btn btn-outline" id="rightBtn" style="width: 100%; height: 100%; font-size: 24px; padding: 0;">▶</button>
+        </div>
+    `;
+    gameControls.appendChild(controls);
+
+    // Кнопки действий
+    const actionButtons = document.createElement('div');
+    actionButtons.style.cssText = 'display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap;';
     
+    let isPaused = false;
+    const pauseBtn = document.createElement('button');
+    pauseBtn.className = 'btn btn-outline';
+    pauseBtn.textContent = '⏸️';
+    pauseBtn.style.cssText = 'min-width: 50px; font-size: 20px;';
+    pauseBtn.title = 'Пауза (Пробел)';
+    pauseBtn.onclick = () => {
+        isPaused = !isPaused;
+        pauseBtn.textContent = isPaused ? '▶️' : '⏸️';
+    };
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'btn btn-outline';
+    closeBtn.textContent = '✖';
+    closeBtn.style.cssText = 'min-width: 50px; font-size: 20px;';
+    closeBtn.title = 'Закрыть игру';
+    closeBtn.onclick = () => {
+        clearInterval(snakeInterval);
+        document.removeEventListener('keydown', handleKeyPress);
+        closeGame();
+    };
+    
+    actionButtons.appendChild(pauseBtn);
+    actionButtons.appendChild(closeBtn);
+    gameControls.appendChild(actionButtons);
+
     // Управление кнопками
     document.getElementById('upBtn').addEventListener('click', () => changeDirection('up'));
     document.getElementById('downBtn').addEventListener('click', () => changeDirection('down'));
     document.getElementById('leftBtn').addEventListener('click', () => changeDirection('left'));
     document.getElementById('rightBtn').addEventListener('click', () => changeDirection('right'));
-    
+
+    // Блокировка повторных нажатий
+    let lastDirection = 'right';
+
     // Управление клавиатурой
     document.addEventListener('keydown', handleKeyPress);
-    
+
     function changeDirection(dir) {
-        if (dir === 'up' && snakeDirection !== 'down') snakeDirection = 'up';
-        if (dir === 'down' && snakeDirection !== 'up') snakeDirection = 'down';
-        if (dir === 'left' && snakeDirection !== 'right') snakeDirection = 'left';
-        if (dir === 'right' && snakeDirection !== 'left') snakeDirection = 'right';
+        if (isPaused) return;
+        
+        // Запрет на разворот на 180°
+        if (dir === 'up' && lastDirection !== 'down') snakeDirection = 'up';
+        if (dir === 'down' && lastDirection !== 'up') snakeDirection = 'down';
+        if (dir === 'left' && lastDirection !== 'right') snakeDirection = 'left';
+        if (dir === 'right' && lastDirection !== 'left') snakeDirection = 'right';
     }
-    
+
     function handleKeyPress(e) {
-        if (e.key === 'ArrowUp') changeDirection('up');
-        if (e.key === 'ArrowDown') changeDirection('down');
-        if (e.key === 'ArrowLeft') changeDirection('left');
-        if (e.key === 'ArrowRight') changeDirection('right');
+        // Предотвращаем прокрутку страницы стрелками
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+            e.preventDefault();
+        }
+        
+        if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') changeDirection('up');
+        if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') changeDirection('down');
+        if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') changeDirection('left');
+        if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') changeDirection('right');
+        if (e.key === ' ' || e.key === 'Escape') {
+            isPaused = !isPaused;
+            pauseBtn.textContent = isPaused ? '▶️' : '⏸️';
+        }
     }
-    
-    function placeFood(gridSize) {
+
+    function placeFood() {
         food = {
             x: Math.floor(Math.random() * (canvas.width / gridSize)),
             y: Math.floor(Math.random() * (canvas.height / gridSize))
         };
+        // Проверка чтобы еда не появилась на змейке
+        while (snake.some(s => s.x === food.x && s.y === food.y)) {
+            food = {
+                x: Math.floor(Math.random() * (canvas.width / gridSize)),
+                y: Math.floor(Math.random() * (canvas.height / gridSize))
+            };
+        }
     }
-    
+
     function draw() {
+        if (isPaused) return;
+
         // Очистка
         ctx.fillStyle = '#0a0a0f';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Еда
+
+        // Сетка
+        ctx.strokeStyle = 'rgba(0, 245, 255, 0.1)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < canvas.width / gridSize; i++) {
+            ctx.beginPath();
+            ctx.moveTo(i * gridSize, 0);
+            ctx.lineTo(i * gridSize, canvas.height);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, i * gridSize);
+            ctx.lineTo(canvas.width, i * gridSize);
+            ctx.stroke();
+        }
+
+        // Еда (пульсирующая)
+        const pulse = Math.sin(Date.now() / 200) * 2;
         ctx.fillStyle = '#ff00ff';
+        ctx.shadowColor = '#ff00ff';
+        ctx.shadowBlur = 15 + pulse;
         ctx.beginPath();
-        ctx.arc(food.x * gridSize + gridSize/2, food.y * gridSize + gridSize/2, gridSize/2 - 2, 0, Math.PI * 2);
+        ctx.arc(food.x * gridSize + gridSize/2, food.y * gridSize + gridSize/2, gridSize/2 - 2 + pulse/2, 0, Math.PI * 2);
         ctx.fill();
-        
+        ctx.shadowBlur = 0;
+
         // Змейка
         snake.forEach((segment, index) => {
-            ctx.fillStyle = index === 0 ? '#00f5ff' : '#7b2fff';
+            const isHead = index === 0;
+            ctx.fillStyle = isHead ? '#00f5ff' : '#7b2fff';
+            ctx.shadowColor = isHead ? '#00f5ff' : '#7b2fff';
+            ctx.shadowBlur = isHead ? 15 : 5;
             ctx.fillRect(segment.x * gridSize + 1, segment.y * gridSize + 1, gridSize - 2, gridSize - 2);
+            ctx.shadowBlur = 0;
+            
+            // Глаза у головы
+            if (isHead) {
+                ctx.fillStyle = '#ffffff';
+                const eyeSize = 4;
+                const eyeOffset = 5;
+                if (snakeDirection === 'right' || snakeDirection === 'left') {
+                    ctx.fillRect(segment.x * gridSize + eyeOffset, segment.y * gridSize + 4, eyeSize, eyeSize);
+                    ctx.fillRect(segment.x * gridSize + eyeOffset, segment.y * gridSize + gridSize - 8, eyeSize, eyeSize);
+                } else {
+                    ctx.fillRect(segment.x * gridSize + 4, segment.y * gridSize + eyeOffset, eyeSize, eyeSize);
+                    ctx.fillRect(segment.x * gridSize + gridSize - 8, segment.y * gridSize + eyeOffset, eyeSize, eyeSize);
+                }
+            }
         });
-        
+
         // Движение
         const head = {x: snake[0].x, y: snake[0].y};
-        
+
         if (snakeDirection === 'up') head.y--;
         if (snakeDirection === 'down') head.y++;
         if (snakeDirection === 'left') head.x--;
         if (snakeDirection === 'right') head.x++;
-        
-        // Проверка столкновений
-        if (head.x < 0 || head.x >= canvas.width / gridSize || 
-            head.y < 0 || head.y >= canvas.height / gridSize ||
-            snake.some(s => s.x === head.x && s.y === head.y)) {
+
+        // Проверка столкновений со стенами - СМЕРТЬ
+        if (head.x < 0 || head.x >= canvas.width / gridSize ||
+            head.y < 0 || head.y >= canvas.height / gridSize) {
             gameOver();
             return;
         }
-        
+
+        // Проверка на столкновение с хвостом - СМЕРТЬ
+        if (snake.some(s => s.x === head.x && s.y === head.y)) {
+            gameOver();
+            return;
+        }
+
         snake.unshift(head);
-        
+
+        // Обновляем последнее направление
+        lastDirection = snakeDirection;
+
         // Проверка еды
         if (head.x === food.x && head.y === food.y) {
             snakeScore += 10;
-            document.getElementById('snakeScore').textContent = 'Счёт: ' + snakeScore;
-            placeFood(gridSize);
+            scoreDisplay.textContent = '🍎 Счёт: ' + snakeScore;
+            
+            // Ускорение каждые 50 очков
+            if (snakeScore % 50 === 0 && gameSpeed > 50) {
+                gameSpeed -= 10;
+                clearInterval(snakeInterval);
+                snakeInterval = setInterval(draw, gameSpeed);
+            }
+            
+            placeFood();
         } else {
             snake.pop();
         }
     }
-    
+
     function gameOver() {
         clearInterval(snakeInterval);
         snakeInterval = null;
         document.removeEventListener('keydown', handleKeyPress);
+
+        // Сохранение рекорда
+        const currentHighScore = localStorage.getItem('snakeHighScore') || 0;
+        if (snakeScore > currentHighScore) {
+            localStorage.setItem('snakeHighScore', snakeScore);
+            highScoreDisplay.textContent = '🏆 Рекорд: ' + snakeScore + ' (НОВЫЙ!)';
+            highScoreDisplay.style.color = '#00ff00';
+        }
+
+        // Очищаем контейнер перед показом экрана смерти
+        const existingGameOver = gameControls.querySelector('.game-over-screen');
+        if (existingGameOver) {
+            existingGameOver.remove();
+        }
+
+        // Создаём экран смерти
+        const gameOverScreen = document.createElement('div');
+        gameOverScreen.className = 'game-over-screen';
+        gameOverScreen.style.cssText = 'text-align: center;';
         
         const gameOverText = document.createElement('div');
-        gameOverText.style.cssText = 'font-size: 24px; color: #ff0000; font-weight: bold; margin: 20px 0;';
-        gameOverText.textContent = '💀 Игра окончена! Счёт: ' + snakeScore;
-        gameControls.appendChild(gameOverText);
-        
+        gameOverText.style.cssText = 'font-size: 28px; color: #ff0000; font-weight: bold; margin: 20px 0; text-shadow: 0 0 10px #ff0000;';
+        gameOverText.textContent = '💀 Игра окончена!';
+        gameOverScreen.appendChild(gameOverText);
+
+        const scoreText = document.createElement('div');
+        scoreText.style.cssText = 'font-size: 24px; color: var(--primary); margin: 15px 0;';
+        scoreText.textContent = '🍎 Ваш счёт: ' + snakeScore;
+        gameOverScreen.appendChild(scoreText);
+
+        if (snakeScore >= currentHighScore && snakeScore > 0) {
+            const newRecordText = document.createElement('div');
+            newRecordText.style.cssText = 'font-size: 20px; color: #00ff00; margin: 10px 0; font-weight: bold;';
+            newRecordText.textContent = '🎉 НОВЫЙ РЕКОРД!';
+            gameOverScreen.appendChild(newRecordText);
+        }
+
         const restartBtn = document.createElement('button');
         restartBtn.className = 'btn btn-primary';
-        restartBtn.textContent = 'Играть снова';
+        restartBtn.textContent = '🔄 Играть снова';
+        restartBtn.style.cssText = 'margin-top: 20px;';
         restartBtn.onclick = () => {
-            gameOverText.remove();
-            restartBtn.remove();
+            gameOverScreen.remove();
             startSnakeGame();
         };
-        gameControls.appendChild(restartBtn);
+        gameOverScreen.appendChild(restartBtn);
+
+        gameControls.appendChild(gameOverScreen);
     }
-    
-    snakeInterval = setInterval(draw, 150);
+
+    snakeInterval = setInterval(draw, gameSpeed);
 }
 
 // ========== MINESWEEPER ==========

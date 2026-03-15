@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BerkovStudio - профессиональная разработка игр и сайтов любой сложности. GameDev, веб-разработка, мини-игры.">
+    <meta name="keywords" content="разработка игр, создание сайтов, GameDev, веб-разработка, заказать сайт, игры на заказ">
+    <meta name="author" content="Антон Чигур">
+    <meta name="theme-color" content="#00f5ff">
+    <meta property="og:title" content="BerkovStudio - Разработка игр и сайтов">
+    <meta property="og:description" content="Профессиональная разработка игр и сайтов любой сложности">
+    <meta property="og:type" content="website">
     <title>BerkovStudio - Разработка игр и сайтов</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -20,18 +28,26 @@
                     <span class="header-info-item">💳 Все валюты</span>
                 </div>
             </div>
-            <nav class="nav">
-                <a href="#about" class="nav-link">О нас</a>
-                <a href="#services" class="nav-link">Услуги</a>
-                <a href="#pricing" class="nav-link">Тарифы</a>
-                <a href="#minigames" class="nav-link">Мини-игры</a>
-                <a href="#contact" class="nav-link">Контакты</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav" id="nav">
+                <a href="#hero" class="nav-link active">🏠 Главная</a>
+                <a href="#about" class="nav-link">👤 О нас</a>
+                <a href="#services" class="nav-link">🛠️ Услуги</a>
+                <a href="#important" class="nav-link">📋 Инфо</a>
+                <a href="#pricing" class="nav-link">💰 Тарифы</a>
+                <a href="#minigames" class="nav-link">🎮 Мини-игры</a>
+                <a href="#order" class="nav-link">📝 Заказать</a>
+                <a href="#contact" class="nav-link">📞 Контакты</a>
             </nav>
         </div>
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero" id="hero">
             <div class="container">
                 <h1 class="hero-title">
                     <span class="gradient-text">BerkovStudio</span>
@@ -169,34 +185,6 @@
             </div>
         </section>
 
-        <section class="important">
-            <div class="container">
-                <h2 class="section-title">Важная информация</h2>
-                <div class="important-grid">
-                    <div class="important-item">
-                        <div class="important-icon">📁</div>
-                        <h3>Формат работы</h3>
-                        <p>Создаю игры и сайты в формате HTML</p>
-                    </div>
-                    <div class="important-item">
-                        <div class="important-icon">📅</div>
-                        <h3>График работы</h3>
-                        <p>Работаю по выходным дням</p>
-                    </div>
-                    <div class="important-item">
-                        <div class="important-icon">💳</div>
-                        <h3>Оплата</h3>
-                        <p>Принимаю все валюты</p>
-                    </div>
-                    <div class="important-item">
-                        <div class="important-icon">🎮</div>
-                        <h3>Разработка игр</h3>
-                        <p>Создаю браузерные игры любой сложности</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section class="process">
             <div class="container">
                 <h2 class="section-title">Как я работаю</h2>
@@ -248,25 +236,88 @@
             </div>
         </section>
 
-        <section class="portfolio">
+        <section class="important-info" id="important">
             <div class="container">
-                <h2 class="section-title">Почему выбирают нас</h2>
-                <div class="portfolio-grid">
-                    <div class="portfolio-item">
-                        <div class="portfolio-icon">🚀</div>
-                        <h3>Быстрая разработка</h3>
-                        <p>Оперативно приступаем к работе и быстро выполняем заказы</p>
+                <h2 class="section-title">Важная информация</h2>
+                <p class="important-info-note">📋 Условия работы и детали</p>
+                <div class="important-info-grid">
+                    <div class="important-info-card">
+                        <div class="info-icon">💼</div>
+                        <h3>Формат работы</h3>
+                        <ul>
+                            <li>✅ Работаю удалённо</li>
+                            <li>✅ Связь через Telegram/Discord</li>
+                            <li>✅ Работа по выходным</li>
+                            <li>✅ Все валюты принимаются</li>
+                        </ul>
                     </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-icon">💼</div>
-                        <h3>Опыт работы</h3>
-                        <p>Многолетний опыт в разработке игр и веб-сайтов</p>
+                    <div class="important-info-card featured">
+                        <div class="info-icon">🎯</div>
+                        <h3>Гарантии</h3>
+                        <ul>
+                            <li>✅ Соблюдение сроков</li>
+                            <li>✅ Качество кода</li>
+                            <li>✅ Тестирование</li>
+                            <li>✅ Поддержка после сдачи</li>
+                        </ul>
                     </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-icon">🎯</div>
-                        <h3>Точное ТЗ</h3>
-                        <p>Внимательно изучаем требования и реализуем всё точно в срок</p>
+                    <div class="important-info-card">
+                        <div class="info-icon">⚡</div>
+                        <h3>Сроки разработки</h3>
+                        <ul>
+                            <li>📁 Базовый: 3-5 дней</li>
+                            <li>📁 Стандарт: 7-14 дней</li>
+                            <li>📁 Премиум: 14-30 дней</li>
+                            <li>📁 Индивидуально: обговаривается</li>
+                        </ul>
                     </div>
+                    <div class="important-info-card">
+                        <div class="info-icon">💰</div>
+                        <h3>Оплата</h3>
+                        <ul>
+                            <li>💳 Предоплата 50%</li>
+                            <li>💳 Окончательный расчёт</li>
+                            <li>💳 Любые валюты</li>
+                            <li>💳 Криптовалюта (по договорённости)</li>
+                        </ul>
+                    </div>
+                    <div class="important-info-card">
+                        <div class="info-icon">🔧</div>
+                        <h3>Технологии</h3>
+                        <ul>
+                            <li>🌐 HTML/CSS/JavaScript</li>
+                            <li>🎮 GameDev (браузерные игры)</li>
+                            <li>📱 Адаптивная вёрстка</li>
+                            <li>⚡ Современные решения</li>
+                        </ul>
+                    </div>
+                    <div class="important-info-card">
+                        <div class="info-icon">📞</div>
+                        <h3>Поддержка</h3>
+                        <ul>
+                            <li>✅ Консультации</li>
+                            <li>✅ Исправление багов</li>
+                            <li>✅ Обновления</li>
+                            <li>✅ Помощь в размещении</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="leaderboard-section">
+            <div class="container">
+                <h2 class="section-title">Таблица лидеров</h2>
+                <p class="leaderboard-note">🏆 Лучшие игроки в мини-играх</p>
+                <div class="leaderboard-tabs">
+                    <button class="leaderboard-tab active" data-game="snake">🐍 Змейка</button>
+                    <button class="leaderboard-tab" data-game="minesweeper">💣 Сапёр</button>
+                    <button class="leaderboard-tab" data-game="slots">🎰 Слоты</button>
+                </div>
+                <div class="leaderboard-container">
+                    <div class="leaderboard" id="leaderboardSnake"></div>
+                    <div class="leaderboard" id="leaderboardMinesweeper" style="display:none;"></div>
+                    <div class="leaderboard" id="leaderboardSlots" style="display:none;"></div>
                 </div>
             </div>
         </section>
@@ -274,28 +325,52 @@
         <section class="order" id="order">
             <div class="container">
                 <h2 class="section-title">Заказать проект</h2>
+                <p class="order-note">📝 Заполните форму и я свяжусь с вами в Telegram</p>
+                <div class="order-benefits">
+                    <span class="order-benefit">⚡ Быстро</span>
+                    <span class="order-benefit">💰 Доступно</span>
+                    <span class="order-benefit">✅ Качественно</span>
+                    <span class="order-benefit">🔒 Надёжно</span>
+                </div>
                 <form class="order-form" id="orderForm">
                     <div class="form-group">
                         <input type="text" id="contact" required placeholder=" ">
-                        <label for="contact">Ваш Telegram или Discord</label>
+                        <label for="contact">Ваш Telegram username *</label>
+                        <span class="form-hint">Например: @username или username (без пробелов)</span>
                     </div>
                     <div class="form-group">
                         <input type="text" id="tariff" placeholder=" " readonly>
                         <label for="tariff">Тариф (выберите выше)</label>
+                        <span class="form-hint">💡 Нажмите "Выбрать" в секции Тарифы</span>
                     </div>
                     <div class="form-group">
                         <input type="date" id="deadline" required>
                         <label for="deadline">Желаемая дата готовности</label>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="service" required placeholder=" ">
-                        <label for="service">Что нужно? (Игра/Сайт)</label>
+                        <select id="service-type" required>
+                            <option value="" disabled selected></option>
+                            <option value="Игра">🎮 Игра</option>
+                            <option value="Сайт">🌐 Сайт</option>
+                            <option value="Лендинг">📄 Лендинг</option>
+                            <option value="Доработка">🔧 Доработка</option>
+                            <option value="Другое">❓ Другое</option>
+                        </select>
+                        <label for="service-type">Тип проекта *</label>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="script" required placeholder=" ">
-                        <label for="script">Описание проекта</label>
+                        <textarea id="script" required placeholder=" " rows="5"></textarea>
+                        <label for="script">Описание проекта *</label>
+                        <span class="form-hint">Опишите: функционал, дизайн, примеры, референсы</span>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-large">Отправить заявку</button>
+                    <button type="submit" class="btn btn-primary btn-large btn-submit">
+                        <span class="btn-text">📤 Отправить заявку</span>
+                        <span class="btn-loading" style="display:none;">⏳ Отправка...</span>
+                    </button>
+                    <p class="form-disclaimer">
+                        🔒 После отправки вам придёт подтверждение в Telegram<br>
+                        📬 Ваши данные в безопасности. Я не передаю информацию третьим лицам.
+                    </p>
                 </form>
             </div>
         </section>
@@ -306,10 +381,22 @@
                 <div class="contact-content">
                     <p class="contact-text">Техническая поддержка:</p>
                     <a href="https://t.me/AntonCguryg" target="_blank" class="contact-link">@AntonCguryg</a>
+                    <div class="contact-buttons">
+                        <a href="https://t.me/AntonCguryg" target="_blank" class="btn btn-primary">
+                            📩 Написать в Telegram
+                        </a>
+                        <button class="btn btn-outline" onclick="copyContact()">
+                            📋 Копировать контакт
+                        </button>
+                    </div>
+                    <p class="contact-hint">💡 Скопируйте контакт и добавьте в мессенджер</p>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- Кнопка наверх -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Наверх">↑</button>
 
     <!-- Game Modals -->
     <div class="game-modal" id="gameModal">
